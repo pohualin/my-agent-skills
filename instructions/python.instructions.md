@@ -8,10 +8,20 @@ applyTo: '**/*.py'
 ## 1. Utility Reuse
 - Before creating any new utility functions or modules, always check the `python_util` library for existing solutions. Reuse and extend shared utilities whenever possible to ensure consistency and reduce duplication across scripts.
 
-## 2. Script Initialization
-- Always place `setup_logging()`, `logger = logging.getLogger(__name__)`, and `load_dotenv()` at the top level of your script, immediately after imports.
-    - This ensures logging and environment variables are configured before any other code runs.
-    - Prevents duplicate log messages and missing environment variables.
+
+## 2. Script Initialization Sequence
+
+**Always follow this import and setup order in scripts:**
+
+```python
+from python_util.config.env_loader import load_env
+load_env()
+import logging
+from python_util.config.logging_config import setup_logging
+setup_logging()
+logger = logging.getLogger(__name__)
+```
+
 - Only call `setup_logging()` in the main script, not in imported modules.
 - In modules that can be both imported and run directly, call `setup_logging()` inside `if __name__ == "__main__":`.
 - Never configure logging in library modules; let the main script handle it.
