@@ -103,10 +103,11 @@ doReturn(mockedValue).when(spyService).packagePrivateOrProtectedMethod(args);
 ## When to Use Mocks vs Real Objects
 
 - **Use mocks** for dependencies (services, repositories, APIs, etc.) to control their behavior, simulate errors, or verify interactions. Mock when the real object is slow, has side effects, or is hard to set up.
-- **Use real objects** for simple data holders (POJOs/DTOs) and the unit under test. Use real objects when you need to ensure fields and getters/setters work as expected, or to avoid issues with mock behavior (e.g., unstubbed methods returning null).
+- **Use real objects** for simple data holders (POJOs/DTOs), the unit under test, and standard library classes such as ObjectMapper. Use real objects when you need to ensure fields and getters/setters work as expected, or to avoid issues with mock behavior (e.g., unstubbed methods returning null).
+- **Do not mock or stub ObjectMapper or other standard library classes in normal test scenarios.** Only mock ObjectMapper if you need to simulate deserialization/serialization errors or other non-standard behavior, and document the reason in the test. Ensure the service under test is always injected with the same ObjectMapper instance as the test, if mocking is required.
 - **Rule of thumb:**
     - Mock dependencies and collaborators.
-    - Use real objects for simple data classes and the class under test.
+    - Use real objects for simple data classes, the class under test, and standard library classes (e.g., ObjectMapper).
 
 **Example:**
 ```java
@@ -120,6 +121,10 @@ pojo.setField("value");
 
 // Good: use a real object for the class under test
 MyComponent component = new MyComponent(service);
+
+// Good: use a real ObjectMapper for JSON operations
+ObjectMapper objectMapper = new ObjectMapper();
+MyJsonClass obj = objectMapper.readValue(jsonString, MyJsonClass.class);
 ```
 
 ## Examples

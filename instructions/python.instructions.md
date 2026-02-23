@@ -3,7 +3,34 @@ description: 'Python coding conventions and guidelines'
 applyTo: '**/*.py'
 ---
 
+
 # Python Coding Conventions & Best Practices
+# Modern Python Scripting Recommendations
+
+## Path Handling
+- Prefer using `pathlib.Path` for all file and directory path manipulations instead of plain strings or `os.path` functions.
+- Use `.parent`, `.mkdir()`, `.exists()`, and other Path methods for clarity and cross-platform compatibility.
+- Convert Path to string with `str(path)` only when required by legacy APIs.
+
+## Type Annotations and Docstrings
+- Add type hints to all function signatures using the `typing` module (e.g., `List[str]`, `Dict[str, int]`).
+- Write PEP 257-compliant docstrings for all functions and modules.
+
+## Error Handling
+- Use try/except blocks around network or file operations to handle errors gracefully and log them.
+
+## Imports
+- Place all imports at the top of the file, except for those required only in specific functions (e.g., argparse in main()).
+
+## Logging
+- Use the shared logging setup as described above.
+- Log key actions, errors, and output file paths for traceability.
+
+## Progress Feedback
+- For scripts processing many records, consider using a progress bar (e.g., with `tqdm`) for user feedback.
+
+## Early Returns
+- Return early from functions if there is nothing to process (e.g., no records), to avoid unnecessary work.
 
 ## 1. Utility Reuse
 - Before creating any new utility functions or modules, always check the `python_util` library for existing solutions. Reuse and extend shared utilities whenever possible to ensure consistency and reduce duplication across scripts.
