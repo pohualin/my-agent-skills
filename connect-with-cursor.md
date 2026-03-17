@@ -42,8 +42,7 @@ ln -s /path/to/my-ai-collection/instructions .cursor/rules/instructions
 mkdir -p ~/.cursor/skills
 
 # Symlink each skill you want
-ln -s /path/to/my-ai-collection/skills/test-coverage-checker ~/.cursor/skills/test-coverage-checker
-ln -s /path/to/my-ai-collection/skills/readme-writer ~/.cursor/skills/readme-writer
+ln -s /path/to/my-ai-collection/skills ~/.cursor/skills
 # … one ln -s per skill folder
 ```
 
